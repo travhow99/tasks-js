@@ -1,3 +1,28 @@
+:root {
+  /* CSS HEX */
+  --pewter-blue: #7da7b7ff;
+  --dark-lava: #4c443cff;
+  --bistre: #322214ff;
+  --queen-pink: #d9b8c4ff;
+  --floral-white: #fefcf4ff;
+
+  --th-primary: var(--pewter-blue);
+  --th-dark: var(--bistre);
+  --dark-text: var(--dark-lava);
+  --th-light: var(--floral-white);
+  --th-secondary: var(--queen-pink);
+}
+
+#root {
+  min-height: 100vh;
+  color: var(--th-dark);
+  background-color: var(--th-secondary);
+}
+
+.th-container {
+  margin-top: 2rem;
+}
+
 .App {
   text-align: center;
 }
@@ -14,14 +39,13 @@
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  background-color: var(--th-dark);
+  min-height: 72px;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: var(--light);
 }
 
 .App-link {
