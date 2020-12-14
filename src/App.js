@@ -2,6 +2,7 @@ import './App.css';
 import { Container, Row, Col } from 'reactstrap';
 import Task from './components/Task';
 import AddTask from './components/AddTask';
+import Calendar from './components/Calendar';
 
 function App() {
 	return (
@@ -12,9 +13,7 @@ function App() {
 			<Container className="th-container">
 				<Row>
 					<Col lg>
-						<div>
-							Calendar
-						</div>
+						<Calendar />
 					</Col>
 					<Col>
 						<Task />	
