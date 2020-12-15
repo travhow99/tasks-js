@@ -1,0 +1,103 @@
+/** Calendar */
+.calendar {
+    padding: 0.5rem;
+  }
+  .calendar > * {
+    user-select: none;
+  }
+  .calendar-header {
+    padding: 0.75rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .calendar-header-month {
+    font-size: 1.5rem;
+  }
+  .calendar-month-btn {
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+  }
+  .calendar-month-btn:hover {
+    background-color: var(--indigo-60);
+    color: var(--indigo-10);
+  }
+  .calendar-week {
+    display: flex;
+    justify-content: space-around;
+  }
+  .calendar-week-header {
+    border-bottom: 1px solid var(--dark-60);
+    margin-bottom: 0.5rem;
+  }
+  .calendar-day-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+  }
+  .calendar-day {
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    width: 50%;
+    text-align: center;
+    border: 1px solid transparent;
+    white-space: nowrap;
+  }
+  .calendar-day:hover {
+    background-color: var(--indigo-60);
+    color: var(--indigo-10);
+  }
+  .calendar-current-date > .calendar-day {
+    border: 1px solid var(--indigo);
+  }
+  .calendar-day.count-1 {
+    background-color: var(--indigo-10);
+  }
+  .calendar-day.count-2 {
+    background-color: var(--indigo-20);
+  }
+  .calendar-day.count-3 {
+    background-color: var(--indigo-40);
+  }
+  .calendar-day.count-4 {
+    background-color: var(--indigo-60);
+  }
+  .calendar-day.count-5 {
+    background-color: var(--indigo-80);
+  }
+  .calendar-day.count-max {
+    background-color: var(--indigo);
+  }
+  .calendar-previous-date {
+    color: var(--dark-60);
+  }
+  .calendar-btn-container {
+    display: flex;
+    justify-content: center;
+  }
+  .calendar-today-btn {
+    padding: 0.75rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: larger;
+    width: 50%;
+  }
+  .calendar-today-btn:hover {
+    color: var(--indigo-80);
+    text-decoration: underline;
+  }
+  .calendar-day.count-1:hover,
+  .calendar-day.count-2:hover,
+  .calendar-day.count-3:hover,
+  .calendar-day.count-4:hover,
+  .calendar-day.count-5:hover,
+  .calendar-day.count-max:hover {
+    color: var(--indigo-60);
+    border: 1px solid var(--indigo);
+  }
+  
