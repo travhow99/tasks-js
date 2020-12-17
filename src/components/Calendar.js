@@ -8,7 +8,6 @@ const Calendar = (props) => {
     // const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
     const dt = DateTime.local();
-    // const today = dt.toLocaleString();
 
     const [selectedDay, setSelectedDay] = useState(dt);
 
@@ -44,11 +43,34 @@ const Calendar = (props) => {
         }
     }
 
-    console.log(calendar)
+    const dateClassName = (day) => {
+        let className = 'calendar-day';
+
+        console.log(day.month, selectedDay.month)
+        console.log(day.hasSame(selectedDay, 'month'))
+
+        let addition = day.hasSame(selectedDay, 'month') 
+                        ? day.hasSame(selectedDay, 'day')
+                            ? ' selected-date'
+                            : ''
+                        : day.startOf('month') < selectedDay.startOf('month')
+                            ? ' calendar-previous-date'
+                            : ' calendar-future-date';
+
+        console.log(addition)
+
+        className += addition;
+
+        console.log(className)
+        return className;
+    }
+
+    const is_today = (day1, day2) => {
+        return day1.day === day2.day && day1.month === day2.month && day1.year === day2.year;
+    }
 
     const abbreviate = (str) => str.substring(0, 3);
 
-    console.log(selectedDay);
     return (
         <div className="calendar">
             <div className="calendar-header">
@@ -68,12 +90,13 @@ const Calendar = (props) => {
                     Next
                 </div>
             </div>
-
-            <div className="calendar-btn-container">
-                <div className="calendar-today-btn" onClick={(()=> setSelectedDay(dt))}>
-                    Today
+            {!is_today(dt, selectedDay) &&
+                <div className="calendar-btn-container">
+                    <div className="calendar-today-btn" onClick={(()=> setSelectedDay(dt))}>
+                        Today
+                    </div>
                 </div>
-            </div>
+            }
 
 
             <div className="calendar-week calendar-week-header">
@@ -84,7 +107,7 @@ const Calendar = (props) => {
             {calendar.map((week) => (
                 <div key={week.week} className="calendar-week">
                     {week.days.map((day, index) => (
-                        <div key={index} /* className={dateClassName(day)} */>
+                        <div key={index} className={dateClassName(day)}>
                             <div className={''/* dayClassName(day) */} onClick={(() => setSelectedDay(day))}>
                                 {day.day}
                             </div>
