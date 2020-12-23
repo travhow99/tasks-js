@@ -11,22 +11,48 @@ const Calendar = (props) => {
 
     const [selectedDay, setSelectedDay] = useState(dt);
 
-    console.log('current selected...', selectedDay, selectedDay.year)
+    console.log('current selected...', selectedDay, selectedDay.toISODate(), selectedDay.year)
 
-    let firstWeekInMonth = selectedDay.set({ day: 1 }).weekNumber;
-    
+    let firstWeekInMonth = selectedDay.startOf('month').weekNumber;
+    console.log(firstWeekInMonth);
     if (firstWeekInMonth === 53) firstWeekInMonth = 0;
 
     const daysInMonth = selectedDay.daysInMonth;
 
-    let lastWeekInMonth = selectedDay.set({ day: daysInMonth }).weekNumber;
+    let lastWeekInMonth = selectedDay.endOf('month').weekNumber;
+    console.log(lastWeekInMonth);
+
     if (lastWeekInMonth === 1) lastWeekInMonth = 53;
 
+    if (selectedDay.month === 1) {
+
+    }
+    
+    let diff = lastWeekInMonth - firstWeekInMonth;
+    let current = 0;
     let calendar = [];
-    console.log('building calendar', firstWeekInMonth, lastWeekInMonth)
+
+    while (current <= diff) {
+        let useWeek = selectedDay.startOf('month').plus({week: current}).startOf('week');
+
+        calendar.push({
+            week: current,
+            days: Array(7).fill(0).map((n, i) => useWeek.set({ day: useWeek.day + i - 1})) 
+        });
+
+        if (useWeek.weekNumber === selectedDay.endOf('month').weekNumber && selectedDay.endOf('month').weekday === 7) diff++;
+
+        current++;
+    }
+
+    /* console.log('building calendar', firstWeekInMonth, lastWeekInMonth)
     for (let week = firstWeekInMonth; week <= lastWeekInMonth; week++) {
+        console.log(selectedDay.year, 'setting to ' + week)
         let useWeek = selectedDay.set({ weekNumber: week });
+        console.log(useWeek);
         useWeek = useWeek.startOf('week')
+
+        console.log(useWeek.year);
 
         calendar.push({
             week: week,
@@ -41,32 +67,35 @@ const Calendar = (props) => {
                 days: Array(7).fill(0).map((n, i) => lastWeek.set({ day: lastWeek.day + i - 1 })) 
             });
         }
-    }
+    } */
+
+    console.log(calendar);
 
     const dateClassName = (day) => {
-        let className = 'calendar-day';
-
-        console.log(day.month, selectedDay.month)
-        console.log(day.hasSame(selectedDay, 'month'))
+        let className = 'calendar-day-container';
 
         let addition = day.hasSame(selectedDay, 'month') 
                         ? day.hasSame(selectedDay, 'day')
-                            ? ' selected-date'
+                            ? ' calendar-current-date'
                             : ''
                         : day.startOf('month') < selectedDay.startOf('month')
                             ? ' calendar-previous-date'
                             : ' calendar-future-date';
 
-        console.log(addition)
-
         className += addition;
 
-        console.log(className)
         return className;
     }
 
-    const is_today = (day1, day2) => {
-        return day1.day === day2.day && day1.month === day2.month && day1.year === day2.year;
+    const dayClassName = (day) => {
+        let className = 'calendar-day';
+        className += is_today(day) ? ' selected-date' : '';
+
+        return className;
+    }
+
+    const is_today = (day1) => {
+        return day1.day === selectedDay.day && day1.month === selectedDay.month && day1.year === selectedDay.year;
     }
 
     const abbreviate = (str) => str.substring(0, 3);
@@ -90,7 +119,7 @@ const Calendar = (props) => {
                     Next
                 </div>
             </div>
-            {!is_today(dt, selectedDay) &&
+            {!is_today(dt) &&
                 <div className="calendar-btn-container">
                     <div className="calendar-today-btn" onClick={(()=> setSelectedDay(dt))}>
                         Today
@@ -108,7 +137,7 @@ const Calendar = (props) => {
                 <div key={week.week} className="calendar-week">
                     {week.days.map((day, index) => (
                         <div key={index} className={dateClassName(day)}>
-                            <div className={''/* dayClassName(day) */} onClick={(() => setSelectedDay(day))}>
+                            <div className={dayClassName(day)} onClick={(() => setSelectedDay(day))}>
                                 {day.day}
                             </div>
                         </div>
