@@ -15,7 +15,7 @@ const Calendar = (props) => {
 
     let firstWeekInMonth = selectedDay.startOf('month').weekNumber;
     console.log(firstWeekInMonth);
-    if (firstWeekInMonth === 53) firstWeekInMonth = 0;
+    if (firstWeekInMonth === 53 || firstWeekInMonth === 52) firstWeekInMonth = 0;
 
     const daysInMonth = selectedDay.daysInMonth;
 
